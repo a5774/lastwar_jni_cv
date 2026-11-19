@@ -1,0 +1,159 @@
+<resources>
+    <string name="app_name">狗叫哥</string>
+    <string name="accessibility_description">在非ROOT设备中,请赋予无障碍实现模拟点击</string>
+    <string name="accessibility_summary">LAST_WAR自动组队</string>
+    <string name="float_welcome">欢迎使用</string>
+    <string name="already_copy">已复制</string>
+    <string name="play_audio_done">音频播放完成</string>
+
+
+    <string name="usage_description">
+        前置条件:\n
+        一. 需要获取悬浮窗权限\n
+        二. 需要屏幕捕获权限\n
+        三. 需要无障碍服务权限\n
+        注意事项:仅个人测试用途,请勿传播和二次分发\n
+        提示:
+        如果你的用户环境为(Normal)请务必授权无障碍服务\n
+        powered_by:牛牛🐄,开心游戏
+    </string>
+    <string name="status_unauthorized_0x1">悬浮窗:Unauthorized</string>
+    <string name="status_unauthorized_0x2">无障碍:Unauthorized</string>
+    <string name="status_unauthorized_0x3">屏幕捕获:Unauthorized</string>
+    <string name="status_authorized_0x1">悬浮窗:Successfully</string>
+    <string name="status_authorized_0x2">无障碍:Successfully</string>
+    <string name="status_authorized_0x3">屏幕捕获:Successfully</string>
+    <string name="authorize_description">授权</string>
+    <string name="radio_description_default">通用模式</string>
+    <string name="radio_description_zombie">金币丧尸</string>
+    <string name="radio_description_none">仅挖掘机</string>
+    <string name="application_boot">开始</string>
+    <string name="application_end">结束</string>
+    <string name="application_exit">退出</string>
+    <string name="carve_merge">导出</string>
+    <string name="user_environment_label">用户环境:</string>
+    <string name="user_environment_root">ROOT</string>
+    <string name="user_environment_normal">NORMAL</string>
+    <string name="user_extra_uuid">(UUID)</string>
+    <string name="treasure_drone_discover">挖掘机监听(不监听组队请勾选"仅挖掘机")</string>
+    <string name="float_drag_tips">按住我进行拖动悬浮窗</string>
+    <string name="float_area_main">MAIN</string>
+    <string name="float_area_vice">VICE</string>
+    <string name="float_switch_team_tips">组队</string>
+    <string name="float_switch_digs_tips">挖掘</string>
+    <string name="float_switch_arms_tips">军备</string>
+    <string name="float_switch_eggs_tips">金蛋</string>
+    <string name="float_switch_frame_tips">捕获</string>
+    <string name="float_switch_hide_tips">隐藏</string>
+    <string name="float_switch_secretary_tips">部长</string>
+    <string name="float_switch_expedition_tips">远征</string>
+    <string name="float_switch_block_tips">拦截数据</string>
+    <string name="float_switch_reboot_tips">重启恢复</string>
+    <string name="float_switch_night_tips">部落夜世</string>
+    <string name="float_switch_engraving_tips">海岛雕刻</string>
+    <string name="radio_engraving_desc_life">生命</string>
+    <string name="radio_engraving_desc_ice">寒冰</string>
+    <string name="radio_engraving_desc_lava">熔岩</string>
+    <string name="radio_engraving_desc_dark">黑暗</string>
+    <string name="float_switch_sonar_simulation_tips">声呐模拟</string>
+    <string name="float_switch_svc_wifi_tips">重置连接</string>
+    <string name="float_switch_block_copy_tips">海岛丢包</string>
+    <string name="float_switch_sonar_frame_tips">捕获透视</string>
+    <string name="float_switch_sonar_merge_tips">合成透视</string>
+
+
+    <string name="float_drag_exit">X</string>
+    <string name="confirm_coordinate">确定</string>
+    <string name="secretary_queue">排队</string>
+    <string name="secretary_enter">部长坐标</string>
+    <string name="secretary_apply">申请坐标</string>
+    <string name="secretary_cancel">取消坐标</string>
+    <string name="secretary_science">科学部长</string>
+    <string name="secretary_construct">建设部长</string>
+    <string name="armaments_single">仅莫妮卡</string>
+    <string name="assembly_filter">默认过滤</string>
+    <string name="win2_stars">两星胜利</string>
+    <string name="game_keep_alive">游戏保活</string>
+    <string name="auto_boot_game">启动游戏</string>
+    <string name="manual_release_assert">手动释放</string>
+    <string name="boom_beach_game">海岛奇兵</string>
+    <string name="frame_view_description">Frame</string>
+    <string name="image_view_description">Overlay</string>
+    <string name="check_permission_status">请先进行必要授权</string>
+    <string name="net_config_url">https://knockdoor.top/Usage/config.json</string>
+    <string name="loading_config_dialog">正在加载配置…</string>">
+    <string name="usage_documentation">点我查看使用手册</string>">
+    <string name="slider_description">组队速度:</string>">
+    <string name="slider_speed_default">1000</string>">
+    <string name="usage_documentation_url">https://github.com/a5774/last_war_cv/wiki</string>">
+    <string name="manage_external_storage_denied">无共享目录访问权限,无法启动</string>
+    <string name="manage_external_storage_pending">当前API版本过低或未授权"</string>
+    <string name="manage_external_storage_allowed">已完全访问共享目录</string>
+    <string name="projection_media_denied">录屏权限被拒绝</string>
+    <string name="projection_media_allowed">请求录制成功</string>
+    <string name="accessibility_service_enable">已开启无障碍</string>
+    <string name="accessibility_service_guide">请在已下载中授权无障碍服务</string>
+    <string name="system_alert_window_denied">悬浮窗权限被拒绝</string>
+    <string name="system_alert_window_allowed">悬浮窗开启成功</string>
+    <string name="runtime_post_notifications_denied">请允许通知权限</string>
+    <string name="runtime_post_notifications_allowed">创建持久化通知</string>
+
+
+    <string name="insufficient_permissions_notify_title">注意</string>
+    <string name="insufficient_permissions_notify_content">权限不完整,仅部分功能可用!</string>
+    <string name="insufficient_permissions_overlay_attention">缺少必要权限,请授予完整权限!</string>
+
+    <string name="coordinate_configuration_overlay_attention">"请先配置坐标参数</string>
+    <string name="single_thread_overlay_attention">"请先配置坐标参数</string>
+
+    <string name="ops_authorization_notify_title">授权完成</string>
+    <string name="ops_authorization_notify_content">在ROOT模式自动完成必要授权</string>
+
+
+    <string name="projection_media_notify_title">MediaProjection Capture</string>
+    <string name="projection_media_notify_content">Capture screen data frame</string>
+    <string name="virtual_display_name_frame">FrameCapture</string>
+    <string name="virtual_display_error">捕获创建失败</string>
+    <string name="virtual_display_init">初始化虚拟显示设备</string>
+
+
+
+    <string name="notification_channel_description">我也不知道这是干嘛的,反正就是要写</string>
+    <string name="notification_channel_id_0x1_name">屏幕捕获持久化通知</string>
+    <string name="notification_channel_id_0x2_name">无障碍持久化通知</string>
+    <string name="notification_channel_id_0x3_name">额外的通知渠道</string>
+
+
+    <string name="no_boot_activity">MainActivity未启动</string>
+
+    <string name="save_frame_complete">保存完成</string>
+    <string name="merge_frame_complete">合并完成</string>
+
+    <string name="alert_dialog_check_slider">速度太快了</string>
+    <string name="alert_dialog_message_slider">不建议设置过小的值,游戏渲染需要时间,过小的值会导致乱点哦</string>
+    <string name="alert_dialog_positive_slider">懂了</string>
+    <string name="alert_dialog_negative_slider">不懂</string>
+
+    <string name="alert_dialog_check_network">校验超时</string>
+    <string name="alert_dialog_message_network">网络连接超时,请检查网络连接</string>
+    <string name="alert_dialog_positive_network">重试</string>
+    <string name="alert_dialog_negative_network">退出</string>
+
+    <string name="alert_dialog_check_maintenance">维护更新</string>
+    <string name="alert_dialog_message_maintenance">外面的世界很美好,放下游戏四处走走</string>
+    <string name="alert_dialog_positive_maintenance">不玩了</string>
+    <string name="alert_dialog_negative_maintenance">退出</string>
+
+    <string name="alert_dialog_check_upgrade">版本更新</string>
+    <string name="alert_dialog_message_upgrade">努力修复了BUG,去更新,放下游戏四处走走</string>
+    <string name="alert_dialog_positive_upgrade">更新</string>
+    <string name="alert_dialog_negative_upgrade">就不</string>
+
+
+    <string name="alert_dialog_check_verify">校验失败</string>
+    <string name="alert_dialog_message_verify">配置文件获取失败,请点击重试</string>
+    <string name="alert_dialog_positive_verify">重试</string>
+    <string name="alert_dialog_negative_verify">退出</string>
+
+
+</resources>

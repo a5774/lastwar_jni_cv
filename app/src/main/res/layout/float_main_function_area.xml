@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flexbox="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/float_flex_main_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|start"
+    android:layout_marginStart="0dp"
+    android:layout_marginTop="0dp"
+    android:padding="0dp"
+    android:background="@color/float_frame_layout"
+    flexbox:alignContent="center"
+    flexbox:alignItems="center"
+    flexbox:flexDirection="row"
+    flexbox:flexWrap="wrap"
+    flexbox:justifyContent="space_between">
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/float_switch_team"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:checked="false"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:text="@string/float_switch_team_tips"
+        android:textColor="@color/float_text_color"
+        android:textSize="12sp"
+        flexbox:layout_flexBasisPercent="50%"
+        flexbox:layout_flexGrow="1" />
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/float_switch_digs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:checked="false"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:text="@string/float_switch_digs_tips"
+        android:textColor="@color/float_text_color"
+        android:textSize="12sp"
+        flexbox:layout_flexBasisPercent="50%"
+        flexbox:layout_flexGrow="1" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/float_switch_arms"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:checked="false"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:text="@string/float_switch_arms_tips"
+        android:textColor="@color/float_text_color"
+        android:textSize="12sp"
+        flexbox:layout_flexBasisPercent="50%"
+        flexbox:layout_flexGrow="1" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/float_switch_secretary"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:checked="false"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:text="@string/float_switch_secretary_tips"
+        android:textColor="@color/float_text_color"
+        android:textSize="12sp"
+        flexbox:layout_flexBasisPercent="50%"
+        flexbox:layout_flexGrow="1" />
+</com.google.android.flexbox.FlexboxLayout>
+

@@ -1,0 +1,13 @@
+{
+  "UsageStatus":1,
+  "MainLoop":1000,
+  "VersionCode":20250713,
+  "UpdateURL":"https://github.com/a5774/last_war_cv/releases",
+  "dialog": {
+    "show" : false,
+    "title" : "公告",
+    "message" : "最后一次更新了,玩腻了",
+    "positiveButton" : "拜拜",
+    "negativeButton" : "再见"
+  }
+}

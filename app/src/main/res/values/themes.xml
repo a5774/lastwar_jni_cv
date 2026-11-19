@@ -1,0 +1,8 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Supercell" parent="Theme.Material3.DynamicColors.Light.NoActionBar">
+        <!-- 自定义启动背景：可以是纯色，也可以是 drawable -->
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
+</resources>

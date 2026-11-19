@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/values/ids.xml -->
+<resources>
+    <item name="radio_normal_mode" type="id"/>
+    <item name="radio_zombie_mode" type="id"/>
+    <item name="radio_none_mode" type="id"/>
+    <item name="radio_science_secretary" type="id"/>
+    <item name="radio_construct_secretary" type="id"/>
+    <item name="radio_engraving_life" type="id"/>
+    <item name="radio_engraving_ice" type="id"/>
+    <item name="radio_engraving_lava" type="id"/>
+    <item name="radio_engraving_dark" type="id"/>
+</resources>

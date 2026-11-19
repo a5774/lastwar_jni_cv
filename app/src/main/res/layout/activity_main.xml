@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flexbox="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/outer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/launch_introduce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:baselineAligned="false"
+            android:gravity="start"
+            android:text="@string/usage_description"
+            android:textSize="12sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/usage_documentation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:baselineAligned="false"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="start"
+            android:padding="4dp"
+            android:text="@string/usage_documentation"
+            android:textColor="@color/float_area_view"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/slider_introduce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/slider_description"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="0dp"
+        flexbox:alignContent="center"
+        flexbox:alignItems="center"
+        flexbox:flexDirection="row"
+        flexbox:flexWrap="nowrap"
+        flexbox:justifyContent="space_between">
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider_speed_selection"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:contentDescription="@string/slider_description"
+            android:padding="0dp"
+            android:stepSize="100"
+            android:value="1000"
+            android:valueFrom="0"
+            android:valueTo="10000" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/slider_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/slider_speed_default"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            flexbox:layout_flexBasisPercent="30%" />
+    </com.google.android.flexbox.FlexboxLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/user_environment_introduce"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/user_environment_label"
+            android:textSize="12sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/user_environment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/user_environment_normal"
+            android:textSize="12sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/user_unique_id"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="@string/user_extra_uuid"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_beach_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="@string/boom_beach_game"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_keep_alive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="@string/game_keep_alive"
+            android:textSize="12sp" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_boot_behavior"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="@string/manual_release_assert"
+            android:textSize="12sp" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_single_armaments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="@string/armaments_single"
+            android:textSize="12sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        flexbox:alignItems="center"
+        flexbox:flexDirection="column"
+        flexbox:flexWrap="wrap"
+        flexbox:justifyContent="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/radio_group_secretary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                tools:ignore="UselessParent">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@id/radio_science_secretary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/secretary_science"
+                    android:textSize="12sp" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@id/radio_construct_secretary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/secretary_construct"
+                    android:textSize="12sp" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/secretary_enter"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/secretary_enter"
+                android:textColor="@color/light_blue"
+                android:textSize="12sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/secretary_apply"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/secretary_apply"
+                android:textColor="@color/light_blue"
+                android:textSize="12sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/secretary_cancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/secretary_cancel"
+                android:textColor="@color/light_blue"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/radio_group_mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+            <!--            <com.google.android.material.radiobutton.MaterialRadioButton-->
+            <!--                android:id="@id/radio_normal_mode"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:text="@string/radio_description_default"-->
+            <!--                android:textSize="12sp" />-->
+            <!--            <com.google.android.material.radiobutton.MaterialRadioButton-->
+            <!--                android:id="@id/radio_zombie_mode"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:text="@string/radio_description_zombie"-->
+            <!--                android:textSize="12sp" />-->
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@id/radio_engraving_life"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:gravity="center_vertical|start"
+                android:text="@string/radio_engraving_desc_life"
+                android:textSize="12sp" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@id/radio_engraving_ice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical|start"
+                android:text="@string/radio_engraving_desc_ice"
+                android:textSize="12sp" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@id/radio_engraving_lava"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical|start"
+                android:text="@string/radio_engraving_desc_lava"
+                android:textSize="12sp" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@id/radio_engraving_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical|start"
+                android:text="@string/radio_engraving_desc_dark"
+                android:textSize="12sp" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkbox_assembly_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_gravity="end|center"
+                android:gravity="center"
+                android:text="@string/win2_stars"
+                android:textSize="12sp" />
+
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/inner_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/status_0x1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="@string/status_unauthorized_0x1"
+            android:textSize="12sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/authorize_0x1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button_rounded"
+            android:text="@string/authorize_description"
+            android:textSize="12sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/status_0x2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="@string/status_unauthorized_0x2"
+            android:textSize="12sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/authorize_0x2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button_rounded"
+            android:text="@string/authorize_description"
+            android:textSize="12sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/status_0x3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="@string/status_unauthorized_0x3"
+            android:textSize="12sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/authorize_0x3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button_rounded"
+            android:text="@string/authorize_description"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="1"
+        android:baselineAligned="false"
+        flexbox:alignItems="center"
+        flexbox:flexDirection="row"
+        flexbox:justifyContent="space_around">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/launch_process"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/button_boot_rounded"
+            android:text="@string/application_boot"
+            android:textSize="12sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/finish_process"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/button_end_rounded"
+            android:text="@string/application_exit"
+            android:textSize="12sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/carve_merge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/button_end_rounded"
+            android:text="@string/carve_merge"
+            android:textSize="12sp" />
+    </com.google.android.flexbox.FlexboxLayout>
+</LinearLayout>

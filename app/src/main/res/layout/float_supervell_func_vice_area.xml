@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flexbox="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/float_flex_beach_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|start"
+    android:layout_marginStart="0dp"
+    android:layout_marginTop="0dp"
+    android:background="@color/float_frame_layout"
+    android:padding="0dp"
+    flexbox:alignContent="center"
+    flexbox:alignItems="center"
+    flexbox:flexDirection="row"
+    flexbox:flexWrap="wrap"
+    flexbox:justifyContent="space_between">
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/float_switch_beach_sonar_simulation"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:checked="false"
+        android:text="@string/float_switch_sonar_simulation_tips"
+        android:textColor="@color/float_text_color"
+        android:textSize="12sp"
+        android:visibility="gone"
+        flexbox:layout_flexBasisPercent="49%"
+        flexbox:layout_flexGrow="1" />
+
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/float_switch_sonar_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:checked="false"
+        android:text="@string/float_switch_sonar_frame_tips"
+        android:textColor="@color/float_text_color"
+        android:textSize="12sp"
+        flexbox:layout_flexBasisPercent="49%"
+        flexbox:layout_flexGrow="1" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/float_switch_beach_sonar_merge"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:checked="false"
+        android:text="@string/float_switch_sonar_merge_tips"
+        android:textColor="@color/float_text_color"
+        android:textSize="12sp"
+        flexbox:layout_flexBasisPercent="50%"
+        flexbox:layout_flexGrow="1" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/float_switch_beach_block_copy"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:checked="false"
+        android:text="@string/float_switch_block_copy_tips"
+        android:textColor="@color/float_text_color"
+        android:textSize="12sp"
+        flexbox:layout_flexBasisPercent="49%"
+        flexbox:layout_flexGrow="1" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/float_switch_beach_svc_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:checked="false"
+        android:text="@string/float_switch_svc_wifi_tips"
+        android:textColor="@color/float_text_color"
+        android:textSize="12sp"
+        flexbox:layout_flexBasisPercent="50%"
+        flexbox:layout_flexGrow="1" />
+
+</com.google.android.flexbox.FlexboxLayout>
+

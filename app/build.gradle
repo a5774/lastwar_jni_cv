@@ -1,0 +1,87 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+android {
+    namespace 'com.example.supercell'
+    compileSdk 36
+    defaultConfig {
+        applicationId "com.example.supercell"
+        minSdk 28
+        targetSdk 33
+        versionCode 20260713
+        versionName "2.2.0"
+        ndk {
+            abiFilters "arm64-v8a"
+        }
+//        仅buildType
+        externalNativeBuild {
+
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+            debuggable false
+            externalNativeBuild {
+                cmake {
+                    cppFlags "-std=c++17"
+                    arguments "-DANDROID_STL=c++_shared"
+                }
+            }
+        }
+        debug {
+            debuggable true
+            applicationIdSuffix ".debug"
+            externalNativeBuild {
+                cmake {
+                    cppFlags "-std=c++17"
+                    arguments "-DANDROID_STL=c++_shared", "-DCMAKE_VERBOSE_MAKEFILE=ON"
+                }
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+//    全局
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.22.1'
+        }
+    }
+    buildFeatures {
+        viewBinding true
+    }
+//    flavorDimensions "mode" // 必须有 dimension
+//    productFlavors {
+//        coexist {
+//            dimension "mode"
+//            applicationId "com.example.supercell.debug" // 新包名，调试用
+//        }
+//    }
+
+
+}
+
+dependencies {
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.constraintlayout
+    implementation libs.gson
+    implementation libs.okhttp
+    implementation libs.flexbox
+    implementation libs.material
+    implementation libs.photoview
+//    implementation project(':OpenCV')
+//    testImplementation libs.junit
+//    androidTestImplementation libs.ext.junit
+//    androidTestImplementation libs.espresso.core
+}
+
+
+
