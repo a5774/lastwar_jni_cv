@@ -27,6 +27,17 @@
         flexbox:layout_flexGrow="1" />
 
     <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/float_switch_beach_svc_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:checked="false"
+        android:text="@string/float_switch_svc_wifi_tips"
+        android:textColor="@color/float_text_color"
+        android:textSize="12sp"
+        flexbox:layout_flexBasisPercent="50%"
+        flexbox:layout_flexGrow="1" />
+
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/float_switch_beach_reboot"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -56,6 +67,7 @@
         android:text="@string/float_switch_engraving_tips"
         android:textColor="@color/float_text_color"
         android:textSize="12sp"
+        android:visibility="gone"
         flexbox:layout_flexBasisPercent="50%"
         flexbox:layout_flexGrow="1" />
 </com.google.android.flexbox.FlexboxLayout>

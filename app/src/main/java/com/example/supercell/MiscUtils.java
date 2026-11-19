@@ -18,14 +18,18 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.NotificationCompat;
 
+import com.example.supercell.databinding.FloatSupercellFunctionAreaBinding;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,7 +52,23 @@ public class MiscUtils {
     static final String audioFile = "sound/DIG.wav";
     static final String[] carve_fragments = {"LIFE", "ICE", "LAVA", "DARK"};
     static final String[] gallery = {"com.google.android.apps.photos", "com.miui.gallery", "com.huawei.photos", "com.samsung.android.gallery3d"};
-
+    static final String[] su_manager = {
+            "com.topjohnwu.magisk",
+            "io.github.vvb2060.magisk",
+            "io.github.huskydg.magisk",
+            "me.weishu.kernelsu",
+            "com.rifsxd.ksunext",
+            "com.sukisu.ultra",
+            "com.resukisu.resukisu",
+            "me.bmax.apatch",
+            "me.garfieldhan.apatch.next",
+            "eu.chainfire.supersu",
+            "com.koushikdutta.superuser",
+            "com.noshufou.android.su",
+            "com.noshufou.android.su.elite",
+            "me.phh.superuser",
+            "kingoroot.supersu"
+    };
 
     public static boolean checkSuCommand() {
         Process process = null;
@@ -239,7 +259,8 @@ public class MiscUtils {
         }
     }
 
-    public static void reset_sockets_by_foreground_packages(Context ctx) {
+    public static CompletableFuture<Void> reset_sockets_by_foreground_packages(Context ctx) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
         new Thread(() -> {
             try {
                 String activities = SuShellUtils.execSuCommand("dumpsys activity activities | grep 'topResumedActivity='").stdout();
@@ -270,13 +291,11 @@ public class MiscUtils {
                 Set<String> foreground_pids = new LinkedHashSet<>();
                 for (String foreground_package : foreground_packages) {
                     SuShellUtils.ExecResult pid_result = SuShellUtils.execSuCommand(String.format(Locale.US, "pidof %s", foreground_package));
-                    for (String foreground_pid : pid_result.stdout().trim().split("\\s+")) {
-                        foreground_pids.add(foreground_pid);
-                    }
+                    foreground_pids.addAll(Arrays.asList(pid_result.stdout().trim().split("\\s+")));
                 }
                 SuShellUtils.ExecResult ss_result = SuShellUtils.execSuCommand("ss -tunpH");
                 if (ss_result.exitCode() != 0) {
-                    ((MainActivity) ctx).updateMessage("ss命令执行失败，请检查是否已root或su命令是否可用");
+                    ((MainActivity) ctx).updateMessage(ss_result.stdout());
                     return;
                 }
                 Set<SocketInfo> socket_info_set = new LinkedHashSet<>();
@@ -316,10 +335,12 @@ public class MiscUtils {
                 if (foreground_activities.size() == 1 && boom_beach_pkg.equals(foreground_activities.iterator().next().package_name())) {
                     MiscUtils.clickByPoint(800, 1000, 300);
                 }
+                future.complete(null);
             } catch (Exception exception) {
                 Log.d("TAG", exception.toString());
             }
         }).start();
+        return future;
     }
 
     public static void back_event_input() {
@@ -353,26 +374,24 @@ public class MiscUtils {
         return Objects.requireNonNull(context.getFilesDir()).getAbsolutePath();
     }
 
-    public static boolean launchApp(Context context, String pkm) {
+    public static void launchApp(Context context, Intent intent) {
         try {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+//            Toast.makeText(context, "包名或启动入口不存在!", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.d("TAG", e.toString());
+        }
+    }
+
+    public static void openAppForLauncher(Context context, String[] pkgs) {
+        for (String pkm : pkgs) {
             Intent intent = context.getPackageManager().getLaunchIntentForPackage(pkm);
             if (intent != null) {
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-                return true;
+                launchApp(context, intent);
             }
-        } catch (Exception e) {
-            Toast.makeText(context, "目标应用未安装或组件不存在", Toast.LENGTH_SHORT).show();
-        }
-        return false;
-    }
-
-    public static void openGallery(Context context) {
-        for (String pkg : gallery) {
-            if (launchApp(context, pkg)) return;
         }
     }
-
     public static void sendNotification(String title, String content) {
         NotificationManager manager = CowApplication.instance.getSystemService(NotificationManager.class);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(CowApplication.instance, CowApplication.channel_extra_common_id).setContentTitle(title).setContentText(content).setSmallIcon(R.drawable.ic_launcher_foreground).setPriority(NotificationCompat.PRIORITY_HIGH).setDefaults(NotificationCompat.DEFAULT_ALL).setAutoCancel(true);

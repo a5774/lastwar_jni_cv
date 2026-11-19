@@ -79,6 +79,21 @@
         <package android:name="com.vivo.gallery"/>
         <package android:name="com.tencent.tmgp.supercell.clashofclans"/>
         <package android:name="com.tencent.tmgp.supercell.boombeach"/>
+        <package android:name="com.topjohnwu.magisk" />
+        <package android:name="io.github.vvb2060.magisk" />
+        <package android:name="io.github.huskydg.magisk" />
+        <package android:name="me.weishu.kernelsu" />
+        <package android:name="com.rifsxd.ksunext" />
+        <package android:name="com.sukisu.ultra" />
+        <package android:name="com.resukisu.resukisu" />
+        <package android:name="me.bmax.apatch" />
+        <package android:name="me.garfieldhan.apatch.next" />
+        <package android:name="eu.chainfire.supersu" />
+        <package android:name="com.koushikdutta.superuser" />
+        <package android:name="com.noshufou.android.su" />
+        <package android:name="com.noshufou.android.su.elite" />
+        <package android:name="me.phh.superuser" />
+        <package android:name="kingoroot.supersu" />
     </queries>
 
 

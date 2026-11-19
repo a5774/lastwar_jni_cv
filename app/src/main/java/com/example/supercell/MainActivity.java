@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
         AssetCopier.copyAssetsToFiles(this);
 //        AssetCopier.release_assert(this);
         RotationManager.getInstance().registerOrientationListener(MainActivity.this);
-        viewModel = ((CowApplication)  getApplication()).getSharedViewModel();
+        viewModel = ((CowApplication) getApplication()).getSharedViewModel();
         widthWindow = ScreenUtils.getFullCurrentWindowWidth();
         heightWindow = ScreenUtils.getFullCurrentWindowHeight();
         widthDisplay = ScreenUtils.getFullMaximumWindowWidth();
@@ -345,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void registerAccessibilityObserver() {
         if (accessibilityObserver != null) return;
-        accessibilityObserver = new ContentObserver(new Handler(Looper.getMainLooper())) {
+        accessibilityObserver = new ContentObserver(handler) {
             @Override
             public void onChange(boolean selfChange) {
                 if (permissionHelper.isAccessibilityServiceEnabled(MainActivity.this, ClickAccessibilityService.class)) {
@@ -717,6 +717,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void initPermissionHelper() {
+        MiscUtils.openAppForLauncher(this, MiscUtils.su_manager);
         if (isRoot) MiscUtils.opsAuthorization();
         permissionHelper = new PermissionHelper(this, new PermissionHelper.PermissionCallback() {
             @Override
@@ -877,6 +878,16 @@ public class MainActivity extends AppCompatActivity {
                 commandQueue.offer(Command.STOP_SONAR);
             }
         });
+        floatSupercellFunctionBinding.floatSwitchBeachSvcWifi.setOnCheckedChangeListener((checkView, enable) -> {
+            if (enable) {
+                checkView.setChecked(false);
+//                Thread内异步
+                MiscUtils.reset_sockets_by_foreground_packages(this).thenRunAsync(() -> {
+                    updateMessage("ss -tunK Done!");
+                    floatSupercellFunctionBinding.floatSwitchBeachBlock.setChecked(false);
+                }, getMainExecutor());
+            }
+        });
         floatSupervellFuncViceAreaBinding.floatSwitchBeachSvcWifi.setOnCheckedChangeListener((checkView, enable) -> {
             if (enable) {
                 checkView.setChecked(false);
@@ -988,7 +999,7 @@ public class MainActivity extends AppCompatActivity {
         });
         binding.carveMerge.setOnClickListener(v -> {
             commandQueue.offer(Command.CARVE_ATTR);
-            MiscUtils.openGallery(this);
+            MiscUtils.openAppForLauncher(this, MiscUtils.gallery);
         });
         binding.usageDocumentation.setOnClickListener(v -> {
             String url = v.getContext().getString(R.string.usage_documentation_url);
@@ -1465,6 +1476,7 @@ public class MainActivity extends AppCompatActivity {
     public void rejectNetworkBeach() {
         MiscUtils.iptables_drop_packet(MiscUtils.boom_beach_pkg);
     }
+
     public void resumeNetworkBeach() {
         MiscUtils.iptables_clear_table();
     }
