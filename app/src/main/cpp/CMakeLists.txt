@@ -60,20 +60,35 @@ message(STATUS "Android Platform: ${ANDROID_PLATFORM}")
 # for GameActivity/NativeActivity derived applications, the same library name must be
 # used in the AndroidManifest.xml file.
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(OPENCV_LIBS_INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-set(OPENCV_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/libs)
+set(GLOBAL_INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(GLOBAL_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 #set(ANDROID_NATIVE_APP_GLUE ${ANDROID_NDK}/sources/android/native_app_glue)
 
-include_directories(
-        ${OPENCV_LIBS_INCLUDE}
-        #${ANDROID_NATIVE_APP_GLUE}
-)
 add_library(libopencv_java4
         SHARED
         IMPORTED
 )
-set_target_properties(libopencv_java4 PROPERTIES IMPORTED_LOCATION
-        ${OPENCV_LIBS}/${ANDROID_ABI}/libopencv_java4.so
+set_target_properties(libopencv_java4 PROPERTIES
+        IMPORTED_LOCATION ${GLOBAL_LIBS}/${ANDROID_ABI}/libopencv_java4.so
+        INTERFACE_INCLUDE_DIRECTORIES ${GLOBAL_INCLUDE}
+)
+
+
+
+set(TESSERACT_INCLUDE_DIR ${GLOBAL_INCLUDE}/tesseractv5)
+
+add_library(ocr_leptonica SHARED IMPORTED)
+set_target_properties(ocr_leptonica PROPERTIES
+        IMPORTED_LOCATION ${GLOBAL_LIBS}/${ANDROID_ABI}/libleptonica.so
+        INTERFACE_INCLUDE_DIRECTORIES ${TESSERACT_INCLUDE_DIR}
+)
+
+add_library(ocr_tesseract SHARED IMPORTED)
+set_target_properties(ocr_tesseract PROPERTIES
+        IMPORTED_LOCATION ${GLOBAL_LIBS}/${ANDROID_ABI}/libtesseract.so
+        INTERFACE_INCLUDE_DIRECTORIES ${TESSERACT_INCLUDE_DIR}
+#       添加宏定义
+        INTERFACE_COMPILE_DEFINITIONS TESS_IMPORTS
 )
 
 #此处需与系统 dlopen 加载的so名称相同
@@ -89,6 +104,8 @@ target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -frtti)
 target_link_libraries(${CMAKE_PROJECT_NAME}
         # List libraries link to the target library
         libopencv_java4
+        ocr_tesseract
+        ocr_leptonica
         #toolchain.cmake 已完成导入
         android
         log
