@@ -24,9 +24,14 @@
 #include <cmath>
 #include <spawn.h>
 #include "Resources.hpp"
+#include "Tess_OCR.hpp"
 // #include "android_native_app_glue.h"
 #define LOG_TAG "SUPERCELL"
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+
+#include <tesseract/baseapi.h>
+#include <leptonica/allheaders.h>
+
 JavaVM *g_vm = nullptr;
 jclass g_android_media_image;
 jclass g_android_media_image$plane;
@@ -1944,6 +1949,74 @@ Java_com_example_supercell_MainActivity_mergeSonarTable(JNIEnv *env, jobject thi
         }
     }
 }
+
+
+Tess_OCR Tess;
+static std::atomic<bool> tess_enable(false);
+static cv::Rect GAIN_AREA(1465, 510, 1585 - 1465, 640 - 510);
+static cv::Rect RECYCLE_AREA(1940, 1120, 2220 - 1940, 1215 - 1120);
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_supercell_MainActivity_tessOcrRecognize(JNIEnv *env, jobject thiz,
+                                                         jint ability_value) {
+    tess_enable.store(true);
+    std::thread([&,ability_value]() -> void {
+        JNIEnv *tEnv = getEnv();
+        if (!tEnv) return;
+        if (unique_thread.load()) {
+            updateMessage(tEnv, "single thread!");
+            g_vm->DetachCurrentThread();
+            return;
+        }
+        if (!acquireNextMat(tEnv).empty()) {
+            updateMessage(tEnv, "frame capture");
+        }
+        if (!Tess.init(fs::path(private_storage) /= "ocr/tessdata/", "chi_sim")) {
+            updateMessage(tEnv, "Tess init failed");
+            g_vm->DetachCurrentThread();
+            return;
+        }
+        unique_thread.store(true);
+        updateMessage(tEnv, "Tess init success");
+        updateMessage(tEnv, std::to_string(ability_value).c_str());
+        TessPreprocessOptions gainPreprocess;
+        gainPreprocess.lowerBound = cv::Scalar(96, 230, 177);
+        gainPreprocess.upperBound = cv::Scalar(116, 255, 197);
+        TessPreprocessOptions recyclePreprocess;
+        recyclePreprocess.lowerBound = cv::Scalar(200, 200, 200);
+        recyclePreprocess.upperBound = cv::Scalar(255, 255, 255);
+        while (tess_enable.load()) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(300));
+            cv::Mat mat = acquireNextMat(tEnv);
+            updateMessage(tEnv, "recognize");
+            std::string attribute = Tess.recognize(
+                    cropROI(mat, GAIN_AREA),
+                    tesseract::PSM_SINGLE_LINE,
+                    gainPreprocess
+            );
+            std::string recycle = Tess.recognize(
+                    cropROI(mat, RECYCLE_AREA),
+                    tesseract::PSM_SINGLE_BLOCK,
+                    recyclePreprocess
+            );
+
+            updateMessage(tEnv, attribute.c_str());
+            updateMessage(tEnv, recycle.c_str());
+
+
+        }
+        g_vm->DetachCurrentThread();
+        unique_thread.store(false);
+    }).detach();
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_supercell_MainActivity_tessOcrDetach(JNIEnv *env, jobject thiz) {
+    tess_enable.store(false);
+}
+
+
 extern "C" JNIEXPORT void JNICALL
 Java_com_example_supercell_MainActivity_resetThreadStatus(JNIEnv *env, jobject thiz
 ) {
@@ -1956,6 +2029,7 @@ Java_com_example_supercell_MainActivity_resetThreadStatus(JNIEnv *env, jobject t
     beach_enable.store(false);
     clans_enable.store(false);
     sonar_enable.store(false);
+    tess_enable.store(false);
 }
 
 extern "C"

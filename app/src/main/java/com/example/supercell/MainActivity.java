@@ -190,6 +190,8 @@ public class MainActivity extends AppCompatActivity {
 
     private final int samplePoint = 5;
 
+    private int ability_value;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -291,10 +293,12 @@ public class MainActivity extends AppCompatActivity {
                             trackedKeepAlive();
                             break;
                         case CLANS:
-                            bootClansLoop(win2Stars);
+                            tessOcrRecognize(ability_value);
+//                            bootClansLoop(win2Stars);
                             break;
                         case STOP_CLANS:
-                            stopClansLoop();
+                            tessOcrDetach();
+//                            stopClansLoop();
                             break;
                         case BEACH:
                             bootBeachLoop(crystal.getRatio());
@@ -857,8 +861,10 @@ public class MainActivity extends AppCompatActivity {
         });
         floatSupercellFunctionBinding.floatSwitchClansLoop.setOnCheckedChangeListener((checkView, enable) -> {
             if (enable) {
+//                tessOcrRecognize();
                 commandQueue.offer(Command.CLANS);
             } else {
+//                tessOcrDetach();
                 commandQueue.offer(Command.STOP_CLANS);
             }
         });
@@ -1007,7 +1013,7 @@ public class MainActivity extends AppCompatActivity {
             v.getContext().startActivity(intent);
         });
         binding.sliderSpeedSelection.addOnChangeListener((slider, speed, fromUser) -> {
-            if (speed < MiscUtils.minMainLoop) {
+           /* if (speed < MiscUtils.minMainLoop) {
                 slider.setValue(MiscUtils.minMainLoop);
                 ThrottleUtils.runThrottled("slider_speed_dialog", 1500, () -> {
                     showDialog(
@@ -1020,7 +1026,9 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 binding.sliderLabel.setText(String.valueOf((long) speed));
                 gMainLoop = (long) speed;
-            }
+            }*/
+            binding.sliderLabel.setText(String.valueOf((int) speed));
+            ability_value = (int) speed;
         });
     }
 
@@ -1530,4 +1538,8 @@ public class MainActivity extends AppCompatActivity {
     public native void saveSonarTable();
 
     public native void mergeSonarTable();
+
+    public native void tessOcrRecognize(int ability_value);
+
+    public native void tessOcrDetach();
 }
