@@ -1489,6 +1489,7 @@ public class MainActivity extends AppCompatActivity {
         MiscUtils.iptables_clear_table();
     }
 
+
     public native void mainOpenCvLastWar(int mode, boolean assembly_filter);
 
     public native void resetThreadStatus();
