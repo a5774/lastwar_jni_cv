@@ -123,6 +123,8 @@ jmethodID cForegroundID;
 jmethodID bootGameID;
 jmethodID rejectNetworkID;
 jmethodID resumeNetworkID;
+jmethodID beachBlockCheckedID;
+jmethodID beachSvcWifiCheckedID;
 //static uint g_count = 0;
 std::stringstream g_format;
 
@@ -242,6 +244,28 @@ void updateMessage(JNIEnv *env, const char *message) {
         env->CallVoidMethod(g_thiz, updateID, jMessage);
     }
     env->DeleteLocalRef(jMessage);
+}
+
+void setBeachSwitchChecked(JNIEnv *env, jmethodID methodID, jboolean checked,
+                           const char *switchName) {
+    if (env == nullptr || g_thiz == nullptr || methodID == nullptr) {
+        LOGD("Cannot update %s switch: JNI callback is unavailable", switchName);
+        return;
+    }
+    env->CallVoidMethod(g_thiz, methodID, checked);
+    if (env->ExceptionCheck()) {
+        env->ExceptionDescribe();
+        env->ExceptionClear();
+        LOGD("Java callback failed while updating %s switch", switchName);
+    }
+}
+
+void setBeachBlockChecked(JNIEnv *env, jboolean checked) {
+    setBeachSwitchChecked(env, beachBlockCheckedID, checked, "beach block");
+}
+
+void setBeachSvcWifiChecked(JNIEnv *env, jboolean checked) {
+    setBeachSwitchChecked(env, beachSvcWifiCheckedID, checked, "beach svc wifi");
 }
 
 
@@ -404,6 +428,11 @@ int resolveNetwork(JNIEnv *env) {
         return 0;
     }
     return 1;
+}
+
+void startBeachWifiReset(JNIEnv *env) {
+    setBeachBlockChecked(env, JNI_TRUE);
+    setBeachSvcWifiChecked(env, JNI_TRUE);
 }
 
 int bootGameViaActivity(JNIEnv *env) {
@@ -1040,6 +1069,8 @@ Java_com_example_supercell_MainActivity_initJNIThread(JNIEnv *env, jobject thiz,
     bootGameID = requestJavaMethodsID(env, "bootGameWithZero", "()V");
     rejectNetworkID = requestJavaMethodsID(env, "rejectNetworkBeach", "()V");
     resumeNetworkID = requestJavaMethodsID(env, "resumeNetworkBeach", "()V");
+    beachBlockCheckedID = requestJavaMethodsID(env, "setBeachBlockCheckedFromJNI", "(Z)V");
+    beachSvcWifiCheckedID = requestJavaMethodsID(env, "setBeachSvcWifiCheckedFromJNI", "(Z)V");
     const std::string _user_ = jstringTostring(env, ssaid);
     resources::init(env, _user_);
     g_input_device = pipeCommand(events.c_str());
@@ -1749,6 +1780,7 @@ Java_com_example_supercell_MainActivity_bootSonarLoop(JNIEnv *env, jobject thiz,
         while (sonar_enable.load()) {
             std::this_thread::sleep_for(std::chrono::milliseconds(500));
             if (isHsvRange(tEnv, retry_network_sample, retry_network_lower, retry_network_upper)) {
+                startBeachWifiReset(tEnv);
                 updateMessage(tEnv, "重新连接中");
                 execSuCommand(svc_wifi_enable);
                 clickByPoint(tEnv, network_retry, 1000);
@@ -1960,7 +1992,7 @@ JNIEXPORT void JNICALL
 Java_com_example_supercell_MainActivity_tessOcrRecognize(JNIEnv *env, jobject thiz,
                                                          jint ability_value) {
     tess_enable.store(true);
-    std::thread([&,ability_value]() -> void {
+    std::thread([&, ability_value]() -> void {
         JNIEnv *tEnv = getEnv();
         if (!tEnv) return;
         if (unique_thread.load()) {
@@ -1985,11 +2017,14 @@ Java_com_example_supercell_MainActivity_tessOcrRecognize(JNIEnv *env, jobject th
         TessPreprocessOptions recyclePreprocess;
         recyclePreprocess.lowerBound = cv::Scalar(200, 200, 200);
         recyclePreprocess.upperBound = cv::Scalar(255, 255, 255);
+        size_t cycle = 0;
         while (tess_enable.load()) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(300));
+            setBeachBlockChecked(tEnv, true);
+            clickByPoint(tEnv, cv::Point(2565, 60), 300);
+            std::this_thread::sleep_for(std::chrono::milliseconds((250 * 8) + (10 * 8) + 500));
             cv::Mat mat = acquireNextMat(tEnv);
             updateMessage(tEnv, "recognize");
-            std::string attribute = Tess.recognize(
+            std::string attribute = Tess.recognizeNumber(
                     cropROI(mat, GAIN_AREA),
                     tesseract::PSM_SINGLE_LINE,
                     gainPreprocess
@@ -1999,11 +2034,17 @@ Java_com_example_supercell_MainActivity_tessOcrRecognize(JNIEnv *env, jobject th
                     tesseract::PSM_SINGLE_BLOCK,
                     recyclePreprocess
             );
-
             updateMessage(tEnv, attribute.c_str());
             updateMessage(tEnv, recycle.c_str());
-
-
+            if (recycle.find("回收") && (std::stoi(attribute) == ability_value)) {
+                updateMessage(tEnv, "找到最高品质!");
+                tess_enable.store(false);
+                playAudio(tEnv);
+                return;
+            }
+            setBeachSvcWifiChecked(tEnv, true);
+            updateMessage(tEnv, std::to_string(cycle++).c_str());
+            std::this_thread::sleep_for(std::chrono::milliseconds(7000));
         }
         g_vm->DetachCurrentThread();
         unique_thread.store(false);

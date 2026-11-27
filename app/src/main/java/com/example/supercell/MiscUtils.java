@@ -295,7 +295,10 @@ public class MiscUtils {
                 }
                 SuShellUtils.ExecResult ss_result = SuShellUtils.execSuCommand("ss -tunpH");
                 if (ss_result.exitCode() != 0) {
-                    ((MainActivity) ctx).updateMessage(ss_result.stdout());
+                    ((MainActivity) ctx).updateMessage(ss_result.stderr());
+                    future.completeExceptionally(new IllegalStateException(
+                            "ss -tunpH exited with code " + ss_result.exitCode() + ": "
+                                    + ss_result.stderr()));
                     return;
                 }
                 Set<SocketInfo> socket_info_set = new LinkedHashSet<>();
@@ -330,7 +333,12 @@ public class MiscUtils {
                 // ss without a family selector includes both IPv4 and IPv6 sockets.
                 for (SocketInfo socket_info : socket_info_set) {
                     String kill_command = String.format(Locale.US, "ss -tunK src %s sport = :%d dst %s dport = :%d", socket_info.localAddress(), socket_info.localPort(), socket_info.remoteAddress(), socket_info.remotePort());
-                    SuShellUtils.execSuCommand(kill_command);
+                    SuShellUtils.ExecResult kill_result = SuShellUtils.execSuCommand(kill_command);
+                   /* if (kill_result.exitCode() != 0) {
+                        throw new IllegalStateException(
+                                kill_command + " exited with code " + kill_result.exitCode()
+                                        + ": " + kill_result.stderr());
+                    }*/
                 }
                 if (foreground_activities.size() == 1 && boom_beach_pkg.equals(foreground_activities.iterator().next().package_name())) {
                     MiscUtils.clickByPoint(800, 1000, 300);
@@ -338,6 +346,7 @@ public class MiscUtils {
                 future.complete(null);
             } catch (Exception exception) {
                 Log.d("TAG", exception.toString());
+                future.completeExceptionally(exception);
             }
         }).start();
         return future;

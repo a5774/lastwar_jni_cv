@@ -887,10 +887,14 @@ public class MainActivity extends AppCompatActivity {
         floatSupercellFunctionBinding.floatSwitchBeachSvcWifi.setOnCheckedChangeListener((checkView, enable) -> {
             if (enable) {
                 checkView.setChecked(false);
-//                Thread内异步
-                MiscUtils.reset_sockets_by_foreground_packages(this).thenRunAsync(() -> {
-                    updateMessage("ss -tunK Done!");
-                    floatSupercellFunctionBinding.floatSwitchBeachBlock.setChecked(false);
+                MiscUtils.reset_sockets_by_foreground_packages(this).whenCompleteAsync((unused, failure) -> {
+                    if (failure == null) {
+                        updateMessage("ss -tunK Done!");
+                        floatSupercellFunctionBinding.floatSwitchBeachBlock.setChecked(false);
+                    } else {
+                        Log.e("MainActivity", "Failed to reset foreground sockets", failure);
+                        updateMessage("ss -tunK failed: " + failure.getMessage());
+                    }
                 }, getMainExecutor());
             }
         });
@@ -1487,6 +1491,26 @@ public class MainActivity extends AppCompatActivity {
 
     public void resumeNetworkBeach() {
         MiscUtils.iptables_clear_table();
+    }
+
+    public void setBeachBlockCheckedFromJNI(boolean checked) {
+        runOnUiThread(() -> {
+            if (floatSupercellFunctionBinding == null) {
+                Log.e("MainActivity", "Beach block switch is not initialized");
+                return;
+            }
+            floatSupercellFunctionBinding.floatSwitchBeachBlock.setChecked(checked);
+        });
+    }
+
+    public void setBeachSvcWifiCheckedFromJNI(boolean checked) {
+        runOnUiThread(() -> {
+            if (floatSupercellFunctionBinding == null) {
+                Log.e("MainActivity", "Beach Wi-Fi switch is not initialized");
+                return;
+            }
+            floatSupercellFunctionBinding.floatSwitchBeachSvcWifi.setChecked(checked);
+        });
     }
 
 
